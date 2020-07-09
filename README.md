@@ -11,7 +11,8 @@ DrawBMP24(&display_object, chip select pin, "the_file.bmp");
 
 You need not initialize and SD card or even include the SD librar, all that is done in inside the functions.
 
-While this library was created for the ILI9341_t3 and intended for Teensy-based MCU's, the library *may* be adaptable to other display drivers provide the driver has a method getPixel() . Note the driver must use the Adafruit_GFX libraries. To allow other display drivers, modify the lines in the .h and .cpp files to allow a different driver to be passed in. For example change call such as SliderH(ILI9341_t3 *disp,... to SliderH(Adafruit_RA8875 *disp,...
+While this library was created for the ILI9341_t3 and intended for Teensy-based MCU's, the library *may* be adaptable to other display drivers provide the driver has a method getPixel(). At the time of posting, I don't know of any lib other that the ILI9341_t3.h that support the getPixel() method.
+
 <br>
 <br>
 
