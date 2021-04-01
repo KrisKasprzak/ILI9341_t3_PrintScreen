@@ -1,6 +1,6 @@
 <b><h2><center>Print Screen for ILI9341_t3 libraries and Touchscreen Displays</center></h1></b>
 
-This library will let programmers add a print screen capability to their projects. There are 2 functions: 1) SaveBMP25 and 2) DrawBMP24 so you can save and draw images. The created imagtes are 24-bit BMP files
+This library will let programmers add a print screen capability to their projects. There are 2 functions: 1) SaveBMP24 and 2) DrawBMP24 so you can save and draw images. The created imagtes are 24-bit BMP files
 As this library requires and SD card there are 2 versions of the functions 1) for SD.h and 2) SdFat.h. The functions are simple inline and don't require any object creation. The goal was to make implementation simple such as
 
 
