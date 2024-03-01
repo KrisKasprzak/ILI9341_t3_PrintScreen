@@ -326,12 +326,6 @@ bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0
 		 return false;
 	}
   }
-
-   // comment this out if you dont use RTC
-   // write file date time stamp
-   dataFile.timestamp(T_ACCESS, year(), month(), day(), hour(), minute(), second());
-   dataFile.timestamp(T_CREATE, year(), month(), day(), hour(), minute(), second());
-   dataFile.timestamp(T_WRITE, year(), month(), day(), hour(), minute(), second());
 	
    bmpFile.close();
 	
