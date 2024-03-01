@@ -160,7 +160,7 @@ you will need to pass in:
 
 bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0, uint16_t y = 0) {
 	SdFat sd;
-	File     bmpFile;
+	SdFile   bmpFile;
 	int      bmpWidth, bmpHeight;			// W+H in pixels
 	int      w, h, row, col;
 	uint8_t  bmpDepth;					// Bit depth (currently must be 24)
@@ -168,27 +168,27 @@ bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0
 	uint32_t rowSize;						// Not always = bmpWidth; may have padding
 	uint8_t  sdbuffer[3 * 8];				// pixel buffer (R+G+B per pixel)
 	uint8_t  buffidx = sizeof(sdbuffer);	// Current position in sdbuffer
-	boolean  flip    = true;				// BMP is stored bottom-to-top
+	boolean  flip    = true;
+	bool IsSD = false;
+	// BMP is stored bottom-to-top
 	uint8_t  r, g, b;						// holders for red green blue
 	uint32_t pos = 0;						// file position
 	uint16_t awColors[320];				// hold colors for one row at a time...
 	uint16_t Read16;						// file read placeholder
 	uint32_t Read32;						// file read placeholder
 
-
 	// let's not test begin, reason is if you create a file SD exists and will fail here
 	// just use any existing object
 	// we will trap file open next
 	sd.begin(cs);
   
-	bmpFile = sd.open(FileName, FILE_READ);
+	IsSD = bmpFile.open(FileName, FILE_READ);
 
-	if (!bmpFile){
+	if (!IsSD){
 		//Serial.print("SD.open: ");
 		//Serial.println(bmpFile);
 		return false;
 	}
-
 
 	if ((x >= d->width()) || (y >= d->height())) {
 	return false;
@@ -219,7 +219,7 @@ bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0
 	bmpImageoffset = Read32; 
 
 	// ignore read
-    ((uint8_t *)&Read32)[0] = bmpFile.read(); 
+    	((uint8_t *)&Read32)[0] = bmpFile.read(); 
 	((uint8_t *)&Read32)[1] = bmpFile.read();
 	((uint8_t *)&Read32)[2] = bmpFile.read();
 	((uint8_t *)&Read32)[3] = bmpFile.read(); 
@@ -258,8 +258,7 @@ bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0
 
       if ((bmpDepth == 24) && (Read32 == 0)) { // 0 = uncompressed
 
-
-		  // if you got this far, legit image file
+	// if you got this far, legit image file
         rowSize = (bmpWidth * 3 + 3) & ~3;
 
         if (bmpHeight < 0) {
