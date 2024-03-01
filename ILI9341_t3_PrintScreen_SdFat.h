@@ -76,8 +76,9 @@ you will need to pass in:
 
 	// it may look odd not error trapping SD create
 	// but if the user already has a created instance this call will fail
-	// if no and SD does fail, we'll cathc it in the SD open statement
-	sd.begin(cs);
+	// if no and SD does fail, we'll catch it in the SD open statement
+	sd.begin(cs, SD_SCK_MHZ(20));
+	//sd.begin(cs);
 
 	IsSD = dataFile.open(FileName, FILE_WRITE);
 
@@ -132,13 +133,20 @@ you will need to pass in:
 			dataFile.write(r);
 		}
 	}
-
+	// comment this out if you dont use RTC
+	// write file date time stamp
+	dataFile.timestamp(T_ACCESS, year(), month(), day(), hour(), minute(), second());
+	dataFile.timestamp(T_CREATE, year(), month(), day(), hour(), minute(), second());
+	dataFile.timestamp(T_WRITE, year(), month(), day(), hour(), minute(), second());
+	 
 	// file written
 	dataFile.close();
 	delay(10);
 	return true;
 
 }
+
+
 
 
 
@@ -158,7 +166,21 @@ you will need to pass in:
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0, uint16_t y = 0) {
+	
 	SdFat sd;
 	SdFile   bmpFile;
 	int      bmpWidth, bmpHeight;			// W+H in pixels
@@ -170,7 +192,6 @@ bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0
 	uint8_t  buffidx = sizeof(sdbuffer);	// Current position in sdbuffer
 	boolean  flip    = true;
 	bool IsSD = false;
-	// BMP is stored bottom-to-top
 	uint8_t  r, g, b;						// holders for red green blue
 	uint32_t pos = 0;						// file position
 	uint16_t awColors[320];				// hold colors for one row at a time...
@@ -180,18 +201,17 @@ bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0
 	// let's not test begin, reason is if you create a file SD exists and will fail here
 	// just use any existing object
 	// we will trap file open next
-	sd.begin(cs);
+	sd.begin(cs, SD_SCK_MHZ(20));
+	// sd.begin(cs);
   
 	IsSD = bmpFile.open(FileName, FILE_READ);
 
 	if (!IsSD){
-		//Serial.print("SD.open: ");
-		//Serial.println(bmpFile);
 		return false;
 	}
 
 	if ((x >= d->width()) || (y >= d->height())) {
-	return false;
+		return false;
 	}
 
   // Parse BMP header
@@ -307,9 +327,15 @@ bool inline DrawBMP24(ILI9341_t3 *d, int cs, const char *FileName, uint8_t x = 0
 	}
   }
 
-  bmpFile.close();
-
-  return true;
+   // comment this out if you dont use RTC
+   // write file date time stamp
+   dataFile.timestamp(T_ACCESS, year(), month(), day(), hour(), minute(), second());
+   dataFile.timestamp(T_CREATE, year(), month(), day(), hour(), minute(), second());
+   dataFile.timestamp(T_WRITE, year(), month(), day(), hour(), minute(), second());
+	
+   bmpFile.close();
+	
+   return true;
   
 }
 
