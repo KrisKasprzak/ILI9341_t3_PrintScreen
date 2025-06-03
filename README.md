@@ -24,8 +24,10 @@ DrawBMP24(&display_object, chip select pin, "the_file.bmp");
 
 You need not initialize and SD card or even include the SD librar, all that is done in inside the functions.
 
+Example screenshots
+
 ![header image](https://raw.github.com/KrisKasprzak/ILI9341_t3_PrintScreen/master/0009.jpg)
-![header image](https://raw.github.com/KrisKasprzak/ILI9341_t3_Menu/master/Images/0006.jpg)
+![header image](https://raw.github.com/KrisKasprzak/ILI9341_t3_PrintScreen/master/0003d.jpg)
 
 While this library was created for the ILI9341_t3 and intended for Teensy-based MCU's, the library *may* be adaptable to other display drivers provide the driver has a method getPixel(). At the time of posting, I don't know of any lib other that the ILI9341_t3.h that support the getPixel() method.
 
