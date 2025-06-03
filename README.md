@@ -29,7 +29,7 @@ Example screenshots
 ![header image](https://raw.github.com/KrisKasprzak/ILI9341_t3_PrintScreen/master/0009.jpg)
 ![header image](https://raw.github.com/KrisKasprzak/ILI9341_t3_PrintScreen/master/0003d.jpg)
 
-While this library was created for the ILI9341_t3 and intended for Teensy-based MCU's, the library *may* be adaptable to other display drivers provide the driver has a method getPixel(). At the time of posting, I don't know of any lib other that the ILI9341_t3.h that support the getPixel() method.
+While this library was created for the ILI9341_t3 and intended for Teensy-based MCU's, the library *may* be adaptable to other display drivers provide the driver has a method getPixel() AND the MISO pin is tri-state (so it can be shared with the SD card). At the time of posting, I don't know of any lib other that the ILI9341_t3.h that supports the getPixel() method.
 
 <br>
 <br>
